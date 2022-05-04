@@ -2,6 +2,7 @@ package civmod.pathfinding;
 
 import civmod.pathfinding.astar.AStar;
 import civmod.pathfinding.astar.AStarWorldCartographer;
+import civmod.pathfinding.baritone.BaritoneConnector;
 import civmod.pathfinding.dijkstra.Dijkstra;
 import civmod.pathfinding.dijkstra.DijkstraWorldCartographer;
 import net.minecraft.core.BlockPos;
@@ -12,7 +13,8 @@ public abstract class PathFinding
 	public static enum PathFindingAlgorithm
 	{
 		AStar("A*"),
-		Dijkstra("Dijkstra");
+		Dijkstra("Dijkstra"),
+		Baritone("Baritone");
 		
 		public String name;
 		
@@ -38,6 +40,8 @@ public abstract class PathFinding
 				return Dijkstra.findPath((DijkstraWorldCartographer)wc, startPos, endPos, maxCostPerNode);
 			case AStar:
 				return AStar.findPath((AStarWorldCartographer)wc, startPos, endPos, maxCostPerNode);
+			case Baritone:
+				return BaritoneConnector.findPath(wc, startPos, endPos, maxCostPerNode);
 			default:
 				throw new IllegalArgumentException("Invalid path finding algorithm \"" + alg + "\"");
 		}
